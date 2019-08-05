@@ -122,10 +122,10 @@ file /run/vemproif-gunicorn.sock
 sudo journalctl -u vemproif-gunicorn.socket
 sudo systemctl status vemproif-gunicorn
 curl --unix-socket /run/vemproif-gunicorn.sock localhost
-sudo systemctl status gunicorn
-sudo journalctl -u gunicorn
+sudo systemctl status vemproif-gunicorn
+sudo journalctl -u vemproif-gunicorn
 sudo systemctl daemon-reload
-sudo systemctl restart gunicorn
+sudo systemctl restart vemproif-gunicorn
 ```
 
 
@@ -143,7 +143,7 @@ server {
 
     location / {
         include proxy_params;
-        proxy_pass http://unix:/run/gunicorn.sock;
+        proxy_pass http://unix:/run/vemproif-gunicorn.sock;
     }
 }
 ```
