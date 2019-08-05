@@ -169,7 +169,8 @@ source envvemproif/bin/activate
 cd vemproif
 git pull
 pip install -r vemproif/project/requeriments_prod.txt
-./manage migrate
+python manage.py migrate
+python manage.py collectstatic
 sudo systemctl restart gunicorn
 sudo systemctl restart nginx
 ```
