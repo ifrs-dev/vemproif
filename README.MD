@@ -138,7 +138,11 @@ server {
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location /static/ {
-        root /webapps/vemproif/project/;
+        root /webapps/vemproif/project/static/;
+    }
+
+    location /arquivos/ {
+        root /webapps/vemproif/project/arquivos/;
     }
 
     location / {
