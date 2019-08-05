@@ -57,8 +57,8 @@ pip install -r /webapps/vemproif/project/requeriments_prod.txt
 Database
 ```bash
 cd /webapps/vemproif/
-manage.py makemigrations
-manage.py migrate
+python manage.py makemigrations
+python manage.py migrate
 ```
 
 
