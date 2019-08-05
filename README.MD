@@ -82,7 +82,7 @@ _sudo vim /etc/systemd/system/vemproif-gunicorn.socket_
 Description=gunicorn socket
 
 [Socket]
-ListenStream=/run/gunicorn.sock
+ListenStream=/run/vemproif-gunicorn.sock
 
 [Install]
 WantedBy=sockets.target
@@ -115,13 +115,13 @@ WantedBy=multi-user.target
 
 Gunicorn Service
 ```
-sudo systemctl start gunicorn.socket
-sudo systemctl enable gunicorn.socket
-sudo systemctl status gunicorn.socket
-file /run/gunicorn.sock
-sudo journalctl -u gunicorn.socket
-sudo systemctl status gunicorn
-curl --unix-socket /run/gunicorn.sock localhost
+sudo systemctl start vemproif-gunicorn.socket
+sudo systemctl enable vemproif-gunicorn.socket
+sudo systemctl status vemproif-gunicorn.socket
+file /run/vemproif-gunicorn.sock
+sudo journalctl -u vemproif-gunicorn.socket
+sudo systemctl status vemproif-gunicorn
+curl --unix-socket /run/vemproif-gunicorn.sock localhost
 sudo systemctl status gunicorn
 sudo journalctl -u gunicorn
 sudo systemctl daemon-reload
