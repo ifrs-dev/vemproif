@@ -76,7 +76,7 @@ deactivate
 
 
 Gunicorn Service File
-_sudo vim /etc/systemd/system/gunicorn.socket_
+_sudo vim /etc/systemd/system/vemproif-gunicorn.socket_
 ```bash
 [Unit]
 Description=gunicorn socket
@@ -91,11 +91,11 @@ WantedBy=sockets.target
 
 
 Gunicorn Service File
-_sudo vim /etc/systemd/system/gunicorn.service_
+_sudo vim /etc/systemd/system/vemproif-gunicorn.service_
 ```bash
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn.socket
+Requires=vemproif-gunicorn.socket
 After=network.target
 
 [Service]
@@ -105,7 +105,7 @@ WorkingDirectory=/webapps/vemproif/
 ExecStart=/webapps/envvemproif/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
-          --bind unix:/run/gunicorn.sock \
+          --bind unix:/run/vemproif-gunicorn.sock \
           project.wsgi:application
 
 [Install]
