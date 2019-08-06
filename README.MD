@@ -171,6 +171,6 @@ git pull
 pip install -r vemproif/project/requeriments_prod.txt
 python manage.py migrate
 python manage.py collectstatic
-sudo systemctl restart gunicorn
+sudo systemctl restart vemproif-gunicorn
 sudo systemctl restart nginx
 ```
