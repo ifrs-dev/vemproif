@@ -76,13 +76,13 @@ deactivate
 
 
 Gunicorn Service File
-_sudo vim /etc/systemd/system/gunicorn.socket_
+_sudo vim /etc/systemd/system/vemproif-gunicorn.socket_
 ```bash
 [Unit]
 Description=gunicorn socket
 
 [Socket]
-ListenStream=/run/gunicorn.sock
+ListenStream=/run/vemproif-gunicorn.sock
 
 [Install]
 WantedBy=sockets.target
@@ -91,11 +91,11 @@ WantedBy=sockets.target
 
 
 Gunicorn Service File
-_sudo vim /etc/systemd/system/gunicorn.service_
+_sudo vim /etc/systemd/system/vemproif-gunicorn.service_
 ```bash
 [Unit]
 Description=gunicorn daemon
-Requires=gunicorn.socket
+Requires=vemproif-gunicorn.socket
 After=network.target
 
 [Service]
@@ -105,7 +105,7 @@ WorkingDirectory=/webapps/vemproif/
 ExecStart=/webapps/envvemproif/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
-          --bind unix:/run/gunicorn.sock \
+          --bind unix:/run/vemproif-gunicorn.sock \
           project.wsgi:application
 
 [Install]
@@ -115,17 +115,17 @@ WantedBy=multi-user.target
 
 Gunicorn Service
 ```
-sudo systemctl start gunicorn.socket
-sudo systemctl enable gunicorn.socket
-sudo systemctl status gunicorn.socket
-file /run/gunicorn.sock
-sudo journalctl -u gunicorn.socket
-sudo systemctl status gunicorn
-curl --unix-socket /run/gunicorn.sock localhost
-sudo systemctl status gunicorn
-sudo journalctl -u gunicorn
+sudo systemctl start vemproif-gunicorn.socket
+sudo systemctl enable vemproif-gunicorn.socket
+sudo systemctl status vemproif-gunicorn.socket
+file /run/vemproif-gunicorn.sock
+sudo journalctl -u vemproif-gunicorn.socket
+sudo systemctl status vemproif-gunicorn
+curl --unix-socket /run/vemproif-gunicorn.sock localhost
+sudo systemctl status vemproif-gunicorn
+sudo journalctl -u vemproif-gunicorn
 sudo systemctl daemon-reload
-sudo systemctl restart gunicorn
+sudo systemctl restart vemproif-gunicorn
 ```
 
 
@@ -138,12 +138,16 @@ server {
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location /static/ {
-        root /webapps/vemproif/project/;
+        root /webapps/vemproif/project/static/;
+    }
+
+    location /arquivos/ {
+        root /webapps/vemproif/project/arquivos/;
     }
 
     location / {
         include proxy_params;
-        proxy_pass http://unix:/run/gunicorn.sock;
+        proxy_pass http://unix:/run/vemproif-gunicorn.sock;
     }
 }
 ```
@@ -165,7 +169,8 @@ source envvemproif/bin/activate
 cd vemproif
 git pull
 pip install -r vemproif/project/requeriments_prod.txt
-./manage migrate
+python manage.py migrate
+python manage.py collectstatic
 sudo systemctl restart gunicorn
 sudo systemctl restart nginx
 ```
