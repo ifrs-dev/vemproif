@@ -19,16 +19,18 @@ class ImportFormSIGAA(ImportForm):
         csv_file = self.cleaned_data['docfile']
         lines = csv_file.read().decode("utf-8").split("\n")
         for line in lines[1:]:
-            try:
-                fields = line.split(",")
+            fields = line.split(",")
+            if len(fields) >= 3:
                 username = fields[2].replace('"', '')
-                first_name = fields[0].replace('"', '')
+                name = fields[0].replace('"', '').strip().upper().split()
+                first_name = name[0]
+                last_name = ' '.join(name[1:])
                 password = fields[4].replace('"', '')
-                user, created = User.objects.get_or_create(username=username, first_name=first_name)
+                user, created = User.objects.get_or_create(username=username, first_name=first_name, last_name=last_name)
                 if created:
                     user.set_password(password)
                     user.save()
-            except:
+            else:
                 break
         return csv_file
 
@@ -39,18 +41,20 @@ class ImportFormSIA(ImportForm):
         csv_file = self.cleaned_data['docfile']
         lines = csv_file.read().decode("utf-8").split("\n")
         for line in lines[1:]:
-            try:
-                fields = line.split(",")
+            fields = line.split(",")
+            if len(fields) >= 3:
                 cpf = fields[7].replace('"', '')
                 username = '%s.%s.%s-%s' % (cpf[0:3], cpf[3:6], cpf[6:9], cpf[9:11])
-                first_name = fields[1].replace('"', '')
+                name = fields[1].replace('"', '').strip().upper().split()
+                first_name = name[0]
+                last_name = ' '.join(name[1:])
                 password = fields[0].replace('"', '')
                 password = password
-                user, created = User.objects.get_or_create(username=username, first_name=first_name)
+                user, created = User.objects.get_or_create(username=username, first_name=first_name, last_name=last_name)
                 if created:
                     user.set_password(password)
                     user.save()
-            except:
+            else:
                 break
         return csv_file
 
@@ -63,12 +67,17 @@ class ImportFormServ(ImportForm):
         serv_group, created = Group.objects.get_or_create(name='servidores')
         for line in lines[1:]:
             fields = line.split(",")
-            username = fields[2].replace('"', '').strip()
-            first_name = upper(fields[1].replace('"', '').strip())
-            password = fields[0].replace('"', '').strip()
-            user, created = User.objects.get_or_create(username=username, first_name=first_name)
-            serv_group.user_set.add(user)
-            if created:
-                user.set_password(password)
-                user.save()
+            if len(fields) >= 3:
+                username = fields[2].replace('"', '').strip()
+                name = fields[1].replace('"', '').strip().upper().split()
+                first_name = name[0]
+                last_name = ' '.join(name[1:])
+                password = fields[0].replace('"', '').strip()
+                user, created = User.objects.get_or_create(username=username, first_name=first_name, last_name=last_name)
+                serv_group.user_set.add(user)
+                if created:
+                    user.set_password(password)
+                    user.save()
+            else:
+                break
         return csv_file
