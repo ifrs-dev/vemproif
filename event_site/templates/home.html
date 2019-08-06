@@ -6,11 +6,10 @@
     <section>
       <div class="container">
         <article class="lead" align="justify">
-          TODO
-          <p>
-            <b>Links Importantes: <b>
-              <a href="#" target="_blank">Regulamento</a> e
-          </p>
+          <b>
+            Participe da Mostra de Trabalhos:
+            <a href="{% url 'experiment-create' %}">Cadastrar Trabalho</a>
+          </b>
         </article>
       </div>
     </section>
@@ -19,31 +18,27 @@
         <div class="row">
           <div class="col-md-12">
             <div class="h2" align="center">
-              Participe da Mostra de Trabalhos
+              Trabalhos Inscritos
             </div>
-		<p align="center">Realize sua inscrição nos minicursos</p>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Descrição</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for experiment in experiments %}
+                <tr>
+                  <td> <a href="{% url 'experiment-detail' experiment.pk %}">{{ experiment.title }}</a></td>
+                  <td>{{ experiment.description|truncatechars:70 }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
           </div>
-	  {% comment %}
-          <div class="col-md-2 col-md-offset-2">
-            <div class="post" align="center">
-                <a href="{% url 'event-create' %}" class="btn btn-ghost">Minicurso</a>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="post" align="center">
-              <a href="{% url 'presentation' %}" class="btn btn-ghost">Apresentaçõe Oral ou Poster</a>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="post" align="center">
-              <a href="{% url 'experiment-create' %}" class="btn btn-ghost">Trabalho</a>
-            </div>
-          </div>
-	{% endcomment %}
         </div>
       </div>
     </section>
-
-
 
 {% endblock content %}
