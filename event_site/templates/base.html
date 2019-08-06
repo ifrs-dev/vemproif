@@ -39,9 +39,8 @@
           </div>
           <div id="navigation" class="collapse navbar-collapse navbar-right">
             <ul class="nav navbar-nav">
-              <li><a href="#" target="_blank">Regulamento</a></li>
               {% if request.user.is_authenticated %}
-                <li><a href="{% url 'experiment-create' %}" target="_blank">Cadastrar Trabalho</a></li>
+                <li><a href="{% url 'experiment-create' %}">Cadastrar Trabalho</a></li>
                 {% if request.user.is_staff %}
                   <a href="{% url 'admin:index' %}" class="btn navbar-btn btn-ghost" data-toggle="tooltip" data-placement="bottom" title="Admin">
                     <i class="fa fa-lock"></i>
@@ -50,6 +49,9 @@
                     <i class="fa fa-upload" aria-hidden="true"></i>
                   </a>
                   <a href="{% url 'sigaa-importer' %}" class="btn navbar-btn btn-ghost" data-toggle="tooltip" data-placement="bottom" title="Importar do SIGAA">
+                    <i class="fa fa-upload" aria-hidden="true"></i>
+                  </a>
+                  <a href="{% url 'serv-importer' %}" class="btn navbar-btn btn-ghost" data-toggle="tooltip" data-placement="bottom" title="Importar Servidores">
                     <i class="fa fa-upload" aria-hidden="true"></i>
                   </a>
                 {% endif %}
@@ -62,6 +64,14 @@
           </div>
         </div>
       </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12" >
+            <img src="{% static 'banner.png' %}" class="img-fluid" width="100%">
+          </div>
+        </div>
+      </div>
+
     </header>
 
     {% block content %}{% endblock content %}
@@ -78,8 +88,10 @@
               </p>
             </div>
             <div class="col-md-4 col-sm-12">
-              <span class="heading">Contato</span>
-              <p>vemproif@ibiruba.ifrs.edu.br</p>
+              <span class="heading">Mais informações</span>
+              <h4>
+                <a target="_blank" href="https://ifrs.edu.br/ibiruba/">ifrs.edu.br/ibiruba</a>
+              </h4>
             </div>
           </div>
         </div>

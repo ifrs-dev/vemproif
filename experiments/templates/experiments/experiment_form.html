@@ -7,6 +7,7 @@
       <form method="POST">
         {% csrf_token %}
         <p><b>Autor: </b>{{ request.user.get_full_name }}</p>
+        {{ form.author.errors }}
         {{ form|bootstrap }}
         <div align="right">
           <a class="btn btn-default" href="{% url 'home' %}">Cancelar</a>
