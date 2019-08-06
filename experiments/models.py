@@ -5,6 +5,7 @@ CHOICES_STATUS_EVENT = (
     (1, "Submetido"),
     (2, "Aprovado"),
     (3, "Não aprovado"),
+    (3, "Não Apresentado"),
 )
 
 
@@ -28,8 +29,8 @@ class Experiment(models.Model):
         return self.title
 
     def get_author(self):
-        authors = [u.get_full_name() for u in self.co_authors.all()]
-        authors += [self.author.get_full_name()]
+        authors = [self.author.get_full_name()]
+        authors += [u.get_full_name() for u in self.co_authors.all()]
         if self.supervisor:
             authors += [self.supervisor.get_full_name()]
         return ', '.join(authors)
