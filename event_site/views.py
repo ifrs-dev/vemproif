@@ -54,7 +54,7 @@ def get_certified(request):
     writer = csv.writer(response)
     writer.writerow(['NOME_PARTICIPANTE','CPF_PARTICIPANTE','EMAIL_PARTICIPANTE','CONDICAO_PARTICIPACAO','FORMA_ACAO','TITULO_ACAO','PERIODO_REALIZACAO','CARGA_HORARIA'])
 
-    events = Experiment.objects.filter(status=2)
+    events = Experiment.objects.all()
 
     for event in events:
         writer.writerow(build_row(event.author, event, 'autor(a)'))
